@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@turbo/gen": "^1.10.14",
-    "@userbase/eslint-config-custom": "workspace:*",
+    "@userbase/eslint-config": "workspace:*",
     "eslint": "^8.50.0",
     "prettier": "^3.0.3",
     "turbo": "^1.10.14"

@@ -10,7 +10,7 @@
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
-    "@userbase/eslint-config-custom": "workspace:*",
+    "@userbase/eslint-config": "workspace:*",
     "@userbase/tsconfig": "workspace:*",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.54.0",

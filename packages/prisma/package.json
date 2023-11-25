@@ -1,0 +1,22 @@
+{
+  "name": "@userbase/prisma",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "prisma generate",
+    "format": "prisma format",
+    "post-install": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate-dev": "prisma migrate dev",
+    "prisma:migrate-deploy": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "@userbase/tsconfig": "workspace:^",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.6.0"
+  }
+}

@@ -1,0 +1,13 @@
+version: "3.8"
+
+name: userbase
+services:
+  database:
+    image: postgres:15
+    container_name: userbase-database
+    environment:
+      - POSTGRES_USER=userbase
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=userbase
+    ports:
+      - "54321:5432"
