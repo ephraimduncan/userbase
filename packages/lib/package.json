@@ -1,0 +1,10 @@
+{
+  "name": "@userbase/lib",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "@userbase/tsconfig": "workspace:^",
+    "next-auth": "^4.23.1"
+  }
+}

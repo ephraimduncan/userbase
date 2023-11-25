@@ -1,0 +1,20 @@
+{
+  "name": "userbase",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "pnpm --filter ui ui:add"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^1.10.14",
+    "@userbase/eslint-config-custom": "workspace:*",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "turbo": "^1.10.14"
+  },
+  "packageManager": "pnpm@8.6.10"
+}
