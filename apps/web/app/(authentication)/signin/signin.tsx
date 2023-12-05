@@ -9,8 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@userbase/ui/primitives/card";
+
+import { useToast } from "@userbase/primitives/use-toast";
+
 import { Input } from "@userbase/ui/primitives/input";
 import { Label } from "@userbase/ui/primitives/label";
+import { signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -64,6 +69,20 @@ export const Icons = {
 };
 
 export function SignIn() {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const signInUser = async (provider: "google" | "github") => {
+    await signIn(provider);
+
+    router.push("/");
+
+    toast({
+      title: "Signed In",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+    });
+  };
+
   return (
     <Card>
       <CardHeader className="space-y-1 py-10 px-8">
@@ -76,11 +95,11 @@ export function SignIn() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-2 gap-6">
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => signOut()}>
             <Icons.google className="mr-2 h-4 w-4" />
             Sign in with Google
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => signInUser("github")}>
             <Icons.gitHub className="mr-2 h-4 w-4" />
             Sign in with Github
           </Button>
