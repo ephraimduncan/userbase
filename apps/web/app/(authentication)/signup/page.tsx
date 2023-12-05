@@ -1,6 +1,8 @@
 import { trpcServer } from "@userbase/trpc/react/server";
 import { getServerAuthSession } from "@userbase/lib/auth";
-import SignInButton from "./signin-button";
+import { SignIn } from "./signup";
+import { Card } from "@userbase/ui/primitives/card";
+import Link from "next/link";
 
 export default async function Home() {
   const data = await trpcServer.hello.get.query();
@@ -9,7 +11,7 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <>
+    <div className="h-screen">
       {session && (
         <div className="text-2xl p-4">
           <h1 className="text-2xl">Hello world</h1>
@@ -21,16 +23,17 @@ export default async function Home() {
       )}
 
       {!session && (
-        <div className="p-5">
-          <h1 className="text-4xl font-semibold">Sign in to your account</h1>
+        <div className="p-5 flex flex-col mx-auto items-center justify-center h-full">
+          <SignIn />
 
-          <p className="text-muted-foreground/60 mt-2 text-sm">
-            Welcome back, we are lucky to have you.
-          </p>
-
-          <SignInButton />
+          <Card className="mt-8 py-3 px-8 text-sm rounded-full">
+            Already have an account?{" "}
+            <Link href="/signin">
+              <span className="text-primary font-medium">Sign in</span>
+            </Link>
+          </Card>
         </div>
       )}
-    </>
+    </div>
   );
 }
