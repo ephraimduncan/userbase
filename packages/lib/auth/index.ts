@@ -3,8 +3,10 @@ import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
+  AuthOptions,
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 import { db } from "@userbase/prisma";
 
@@ -23,7 +25,7 @@ declare module "next-auth" {
   // }
 }
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -38,6 +40,10 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
 };

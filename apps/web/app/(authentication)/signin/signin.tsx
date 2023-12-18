@@ -95,7 +95,7 @@ export function SignIn() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-2 gap-6">
-          <Button variant="outline" onClick={() => signOut()}>
+          <Button variant="outline" onClick={() => signIn("google")}>
             <Icons.google className="mr-2 h-4 w-4" />
             Sign in with Google
           </Button>
