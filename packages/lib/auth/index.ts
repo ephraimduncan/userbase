@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import {
-  getServerSession,
+  AuthOptions,
   type DefaultSession,
   type NextAuthOptions,
-  AuthOptions,
+  getServerSession,
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
