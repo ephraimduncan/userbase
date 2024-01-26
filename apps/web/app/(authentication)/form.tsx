@@ -15,11 +15,7 @@ const Form = ({ children, action }: {
             onSubmit={
                 async (e) => {
                     e.preventDefault();
-
                     const formData = new FormData(e.currentTarget);
-
-                    console.log(">>>>>FORM DATA username", formData.get("username"));
-                    console.log(">>>>>FORM DATA password", formData.get("password"));
 
                     const response = await fetch(action, {
                         method: "POST",

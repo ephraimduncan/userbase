@@ -22,7 +22,7 @@ model Post {
 
 model User {
     id           String    @id @unique
-    username     String    @unique
+    email        String    @unique
     auth_session Session[]
     key          Key[]
     Post         Post[]

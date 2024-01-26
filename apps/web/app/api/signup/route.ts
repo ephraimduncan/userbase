@@ -8,18 +8,18 @@ import type { NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
     const formData = await request.formData();
-    const username = formData.get("username");
+    const email = formData.get("email");
     const password = formData.get("password");
 
     // TODO: Replace Validation with Zod
     if (
-        typeof username !== "string" ||
-        username.length < 4 ||
-        username.length > 31
+        typeof email !== "string" ||
+        email.length < 4 ||
+        email.length > 31
     ) {
         return NextResponse.json(
             {
-                error: "Invalid username"
+                error: "Invalid email"
             },
             {
                 status: 400
@@ -45,12 +45,12 @@ export const POST = async (request: NextRequest) => {
     try {
         const user = await auth.createUser({
             key: {
-                providerId: "username",
-                providerUserId: username.toLowerCase(),
+                providerId: "email",
+                providerUserId: email.toLowerCase(),
                 password // hashed by Lucia
             },
             attributes: {
-                username
+                email
             }
         });
 
@@ -78,7 +78,7 @@ export const POST = async (request: NextRequest) => {
         ) {
             return NextResponse.json(
                 {
-                    error: "Username already taken"
+                    error: "email already taken"
                 },
                 {
                     status: 400
