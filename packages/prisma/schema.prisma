@@ -22,7 +22,14 @@ model Post {
 
 model User {
     id           String    @id @unique
-    email        String    @unique
+    // TODO: Fetch email from auth session so that it is available all the time.
+    // https://github.com/nextauthjs/next-auth/blob/main/packages/core/src/providers/github.ts
+    // Use this implementation as a reference.
+    email        String?   @unique
+    name         String?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+    image        String?
     auth_session Session[]
     key          Key[]
     Post         Post[]

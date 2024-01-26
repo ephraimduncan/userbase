@@ -26,11 +26,11 @@ export function SignUp() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
-            <Button variant="outline">
+            <Button variant="outline" type="button">
               <Icons.google className="mr-2 h-4 w-4" />
               Sign up with Google
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" type="button">
               <Icons.gitHub className="mr-2 h-4 w-4" />
               Sign up with Github
             </Button>

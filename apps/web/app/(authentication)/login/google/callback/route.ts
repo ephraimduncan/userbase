@@ -1,11 +1,11 @@
-import { auth, githubAuth } from "@/auth/lucia";
+import { auth, googleAuth } from "@/auth/lucia";
 import { OAuthRequestError } from "@lucia-auth/oauth";
 import { cookies, headers } from "next/headers";
 
 import type { NextRequest } from "next/server";
 
 export const GET = async (request: NextRequest) => {
-    const storedState = cookies().get("github_oauth_state")?.value;
+    const storedState = cookies().get("google_oauth_state")?.value;
     const url = new URL(request.url);
     const state = url.searchParams.get("state");
     const code = url.searchParams.get("code");
@@ -18,8 +18,8 @@ export const GET = async (request: NextRequest) => {
     }
 
     try {
-        const { getExistingUser, githubUser, githubTokens, createUser } =
-            await githubAuth.validateCallback(code);
+        const { getExistingUser, googleUser, googleTokens, createUser } =
+            await googleAuth.validateCallback(code);
 
         const getUser = async () => {
             const existingUser = await getExistingUser();
@@ -29,9 +29,9 @@ export const GET = async (request: NextRequest) => {
 
             const user = await createUser({
                 attributes: {
-                    email: githubUser.email || "",
-                    name: githubUser.name || "",
-                    image: githubUser.avatar_url
+                    name: googleUser.name,
+                    image: googleUser.picture,
+                    email: googleUser.email ?? null
                 }
             });
 
@@ -53,10 +53,12 @@ export const GET = async (request: NextRequest) => {
         return new Response(null, {
             status: 302,
             headers: {
-                Location: "/" // redirect to profile page
+                Location: "/"
             }
         });
     } catch (e) {
+        console.log(e);
+
         if (e instanceof OAuthRequestError) {
             // invalid code
             return new Response(null, {

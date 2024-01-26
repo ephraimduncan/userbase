@@ -86,11 +86,11 @@ export function SignIn() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
-            <Button variant="outline" onClick={(a) => console.log(a)}>
+            <Button variant="outline" type="button" onClick={() => router.push("/login/google")}>
               <Icons.google className="mr-2 h-4 w-4" />
               Sign in with Google
             </Button>
-            <Button variant="outline" onClick={() => router.push("/login/github")}>
+            <Button variant="outline" type="button" onClick={() => router.push("/login/github")}>
               <Icons.gitHub className="mr-2 h-4 w-4" />
               Sign in with Github
             </Button>
