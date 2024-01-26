@@ -9,8 +9,6 @@ export default async function Home() {
   const authRequest = auth.handleRequest("GET", context);
   const session = await authRequest.validate();
 
-  console.log(">>>>>SESSION", session);
-
   if (session) {
     redirect("/");
   }

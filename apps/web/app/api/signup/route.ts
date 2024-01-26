@@ -50,7 +50,10 @@ export const POST = async (request: NextRequest) => {
                 password // hashed by Lucia
             },
             attributes: {
-                email
+                email,
+                // TODO: Accept Username
+                name: "",
+                image: ""
             }
         });
 
@@ -58,8 +61,6 @@ export const POST = async (request: NextRequest) => {
             userId: user.userId,
             attributes: {}
         });
-
-        console.log("lucia session", session)
 
         const authRequest = auth.handleRequest(request.method, context);
         authRequest.setSession(session);

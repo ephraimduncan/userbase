@@ -41,8 +41,6 @@ export const GET = async (request: NextRequest) => {
                     },
                 })
 
-                console.log("user email", res)
-
                 if (res.ok) {
                     const emails = await res.json();
                     const primaryEmail = (emails.find((e: GitHubEmail) => e.primary) ?? emails[0]).email
@@ -95,8 +93,6 @@ export const GET = async (request: NextRequest) => {
                 status: 400
             });
         }
-
-        console.log(e);
 
         return new Response(null, {
             status: 500
