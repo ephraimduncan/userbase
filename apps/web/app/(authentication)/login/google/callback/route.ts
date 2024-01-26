@@ -1,6 +1,7 @@
 import { auth, googleAuth } from "@/auth/lucia";
 import { OAuthRequestError } from "@lucia-auth/oauth";
 import { cookies, headers } from "next/headers";
+import { db } from "@userbase/prisma"
 
 import type { NextRequest } from "next/server";
 
@@ -18,7 +19,7 @@ export const GET = async (request: NextRequest) => {
     }
 
     try {
-        const { getExistingUser, googleUser, googleTokens, createUser } =
+        const { getExistingUser, googleUser, createUser, createKey } =
             await googleAuth.validateCallback(code);
 
         const getUser = async () => {
@@ -26,6 +27,34 @@ export const GET = async (request: NextRequest) => {
             if (existingUser) {
                 return existingUser
             };
+
+            const primaryEmail = googleUser.email ?? null;
+
+            if (!primaryEmail) {
+                throw new Error("No primary email found")
+            }
+
+            if (!googleUser.email_verified) {
+                throw new Error("Primary email not verified")
+            }
+
+            const existingDatabaseUserWithEmail = await db.user.findFirst({
+                where: {
+                    email: primaryEmail
+                },
+            });
+
+            if (existingDatabaseUserWithEmail) {
+                const user = auth.transformDatabaseUser({
+                    email: existingDatabaseUserWithEmail.email,
+                    name: existingDatabaseUserWithEmail.name || googleUser.name || "",
+                    image: existingDatabaseUserWithEmail.image || googleUser.picture || "",
+                    id: existingDatabaseUserWithEmail.id
+                });
+
+                await createKey(user.userId);
+                return user;
+            }
 
             const user = await createUser({
                 attributes: {

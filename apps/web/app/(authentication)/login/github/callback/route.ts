@@ -1,6 +1,7 @@
 import { auth, githubAuth } from "@/auth/lucia";
 import { OAuthRequestError } from "@lucia-auth/oauth";
 import { cookies, headers } from "next/headers";
+import { db } from "@userbase/prisma"
 
 import type { NextRequest } from "next/server";
 
@@ -25,7 +26,7 @@ export const GET = async (request: NextRequest) => {
     }
 
     try {
-        const { getExistingUser, githubUser, githubTokens, createUser } =
+        const { getExistingUser, githubUser, githubTokens, createUser, createKey } =
             await githubAuth.validateCallback(code);
 
         const getUser = async () => {
@@ -34,38 +35,48 @@ export const GET = async (request: NextRequest) => {
                 return existingUser
             };
 
-            if (!githubUser.email) {
-                const res = await fetch("https://api.github.com/user/emails", {
-                    headers: {
-                        Authorization: `Bearer ${githubTokens.accessToken}`,
-                    },
-                })
+            const emailResponse = await fetch("https://api.github.com/user/emails", {
+                headers: {
+                    Authorization: `Bearer ${githubTokens.accessToken}`,
+                },
+            })
 
-                if (res.ok) {
-                    const emails = await res.json();
-                    const primaryEmail = (emails.find((e: GitHubEmail) => e.primary) ?? emails[0]).email
+            const emails: GitHubEmail[] = await emailResponse.json();
+            const primaryEmail = emails.find((email: GitHubEmail) => email.primary) ?? null;
 
-                    if (primaryEmail) {
-                        return await createUser({
-                            attributes: {
-                                email: primaryEmail,
-                                name: githubUser.name || "",
-                                image: githubUser.avatar_url
-                            }
-                        });
-                    }
-                }
+            if (!primaryEmail) {
+                throw new Error("No primary email found")
             }
 
-            const user = await createUser({
+            if (!primaryEmail.verified) {
+                throw new Error("Primary email not verified")
+            }
+
+            const existingDatabaseUserWithEmail = await db.user.findFirst({
+                where: {
+                    email: primaryEmail.email
+                },
+            });
+
+            if (existingDatabaseUserWithEmail) {
+                const user = auth.transformDatabaseUser({
+                    email: existingDatabaseUserWithEmail.email,
+                    name: existingDatabaseUserWithEmail.name || githubUser.name || "",
+                    image: existingDatabaseUserWithEmail.image || githubUser.avatar_url,
+                    id: existingDatabaseUserWithEmail.id
+                });
+
+                await createKey(user.userId);
+                return user;
+            }
+
+            return await createUser({
                 attributes: {
-                    email: githubUser.email || "",
+                    email: primaryEmail.email,
                     name: githubUser.name || "",
                     image: githubUser.avatar_url
                 }
             });
-
-            return user;
         };
 
         const user = await getUser();
@@ -93,6 +104,8 @@ export const GET = async (request: NextRequest) => {
                 status: 400
             });
         }
+
+        console.log(e)
 
         return new Response(null, {
             status: 500
