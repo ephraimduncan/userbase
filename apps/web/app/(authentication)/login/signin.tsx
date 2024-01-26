@@ -12,7 +12,6 @@ import {
 } from "@userbase/ui/primitives/card";
 import { Input } from "@userbase/ui/primitives/input";
 import { Label } from "@userbase/ui/primitives/label";
-import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Form from "../form";
 
@@ -74,17 +73,6 @@ export function SignIn() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const signInUser = async (provider: "google" | "github") => {
-    await signIn(provider);
-
-    router.push("/");
-
-    toast({
-      title: "Signed In",
-      description: "Friday, February 10, 2023 at 5:57 PM",
-    });
-  };
-
   return (
     <Form action="/api/login">
       <Card>
@@ -98,11 +86,11 @@ export function SignIn() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
-            <Button variant="outline" onClick={() => signIn("google")}>
+            <Button variant="outline" onClick={(a) => console.log(a)}>
               <Icons.google className="mr-2 h-4 w-4" />
               Sign in with Google
             </Button>
-            <Button variant="outline" onClick={() => signInUser("github")}>
+            <Button variant="outline" onClick={() => router.push("/login/github")}>
               <Icons.gitHub className="mr-2 h-4 w-4" />
               Sign in with Github
             </Button>

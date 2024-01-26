@@ -32,6 +32,9 @@ importers:
       '@lucia-auth/adapter-prisma':
         specifier: ^3.0.2
         version: 3.0.2(@prisma/client@5.8.0)(lucia@2.7.6)
+      '@lucia-auth/oauth':
+        specifier: ^3.5.2
+        version: 3.5.2(lucia@2.7.6)
       '@userbase/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -541,6 +544,14 @@ packages:
       lucia: ^2.0.0
     dependencies:
       '@prisma/client': 5.8.0(prisma@5.8.0)
+      lucia: 2.7.6
+    dev: false
+
+  /@lucia-auth/oauth@3.5.2(lucia@2.7.6):
+    resolution: {integrity: sha512-GAYKHs2d6VMx64f0gWk5ljdeEKLa4EsoFOWSZHVHVtsFHOLuaFtJBT2ybLGIUb6oyJbQ/fibjRwYoNXxI54iHQ==}
+    peerDependencies:
+      lucia: ^2.0.0
+    dependencies:
       lucia: 2.7.6
     dev: false
 
