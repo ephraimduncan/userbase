@@ -1,8 +1,12 @@
 "use client";
 
 import { Button } from "@userbase/ui/primitives/button";
-import { signOut } from "next-auth/react";
+import Form from "./(authentication)/form";
 
 export default function SignOut() {
-  return <Button onClick={() => signOut()}>Sign Out</Button>;
+  return (
+    <Form action="/api/logout">
+      <Button type="submit">Sign Out</Button>
+    </Form>
+  )
 }

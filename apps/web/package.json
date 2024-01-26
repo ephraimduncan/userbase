@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
+    "@lucia-auth/adapter-prisma": "^3.0.2",
     "@userbase/lib": "workspace:^",
+    "@userbase/prisma": "workspace:^",
     "@userbase/trpc": "workspace:^",
     "@userbase/ui": "workspace:*",
+    "lucia": "^2.7.6",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
     "react": "^18.2.0",
