@@ -4,6 +4,13 @@ import { cookies, headers } from "next/headers";
 
 import type { NextRequest } from "next/server";
 
+export type GitHubEmail = {
+    email: string
+    primary: boolean
+    verified: boolean
+    visibility: "public" | "private"
+}
+
 export const GET = async (request: NextRequest) => {
     const storedState = cookies().get("github_oauth_state")?.value;
     const url = new URL(request.url);
@@ -26,6 +33,31 @@ export const GET = async (request: NextRequest) => {
             if (existingUser) {
                 return existingUser
             };
+
+            if (!githubUser.email) {
+                const res = await fetch("https://api.github.com/user/emails", {
+                    headers: {
+                        Authorization: `Bearer ${githubTokens.accessToken}`,
+                    },
+                })
+
+                console.log("user email", res)
+
+                if (res.ok) {
+                    const emails = await res.json();
+                    const primaryEmail = (emails.find((e: GitHubEmail) => e.primary) ?? emails[0]).email
+
+                    if (primaryEmail) {
+                        return await createUser({
+                            attributes: {
+                                email: primaryEmail,
+                                name: githubUser.name || "",
+                                image: githubUser.avatar_url
+                            }
+                        });
+                    }
+                }
+            }
 
             const user = await createUser({
                 attributes: {
@@ -63,6 +95,8 @@ export const GET = async (request: NextRequest) => {
                 status: 400
             });
         }
+
+        console.log(e);
 
         return new Response(null, {
             status: 500

@@ -113,7 +113,7 @@ export function SignIn() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" size={"lg"}>
+          <Button type="submit" className="w-full" size={"lg"}>
             Sign in
           </Button>
         </CardFooter>
