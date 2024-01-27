@@ -9,13 +9,12 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@userbase/ui/primitives/accordion";
-import { UserNav } from "./profile";
-import TeamSwitcher from "./team-switcher";
+import { UserNav } from "./user-nav";
 
 export default function DashboardPage() {
 	return (
 		<div className="flex flex-row h-screen">
-			<div className="w-1/5 px-6 py-8 border-r border-r-muted-foreground/40 flex flex-col justify-between">
+			<div className="w-1/5 px-6 py-8 border-r border-input flex flex-col justify-between">
 				<div className="space-y-8">
 					<div className="flex items-center gap-2">
 						<Image alt="Userbase Logo" src="/logo.svg" width={40} height={40} />
@@ -69,9 +68,8 @@ export default function DashboardPage() {
 						</div>
 					</div>
 				</div>
-				<div>
-					<TeamSwitcher />
-				</div>
+				<UserNav />
+
 			</div>
 			<div className="w-full px-6 py-8">Dashboard</div>
 		</div>
