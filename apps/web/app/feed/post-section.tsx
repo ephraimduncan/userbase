@@ -1,37 +1,57 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@userbase/ui/primitives/avatar";
 import { Badge } from "@userbase/ui/primitives/badge";
 import { ChevronUp } from "lucide-react";
-import Image from "next/image";
 
-export function PostSection() {
-  return <div className='border rounded-md  flex w-full items-stretch'>
-    <div className='border-r px-4 py-3 flex-1 space-y-3'>
-      <div>
-        <h1 className='font-medium'>Feedback Title</h1>
-        <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptatem.</p>
-      </div>
+type PostSectionProps = {
+  title: string,
+  description?: string,
+  author: string,
+  authorImage: string,
+  content?: string,
+  upvotes: number,
+  label: string,
 
-      <div className='flex justify-between'>
-        <div className='flex gap-1 items-center'>
-          <Image alt="Profile logo Logo" src="/logo.svg" width={24} height={24} />
-          <span className='text-sm text-foreground/70'>John Doe</span>
-        </div>
+}
+
+export function PostSection({ author, description, content, title, upvotes, label, authorImage }: PostSectionProps) {
+  return (
+    <div className='border rounded-md h-[110px] flex w-full items-stretch cursor-pointer pointer-events-auto'>
+      <div className='border-r px-4 py-3 flex-1 space-y-3 flex flex-col justify-between'>
         <div>
-          <Badge
-            variant="outline"
-            className="rounded-sm px-1 font-normal"
-          >
-            Feature Request
-          </Badge>
+          <h1 className='font-medium'>{title}</h1>
+          {/* TODO: Fix this to avoid showing both at the same time */}
+          {description && <p className='text-sm text-gray-500'>{description}</p>}
+          {content && <p className='text-sm text-gray-500'>{content.split(" ").slice(0, 5).join(" ")}</p>}
+        </div>
+
+        <div className='flex justify-between'>
+          <div className='flex gap-1 items-center'>
+            <Avatar className="h-7 w-7">
+              <AvatarImage src={authorImage} alt={author} />
+              <AvatarFallback className="text-xs">ED</AvatarFallback>
+            </Avatar>
+
+            <span className='text-sm text-foreground/70'>{author}</span>
+          </div>
+          {label && (
+            <div>
+              <Badge
+                variant="outline"
+                className="rounded-sm px-1 font-normal"
+              >
+                {label.charAt(0).toUpperCase() + label.slice(1)}
+              </Badge>
+            </div>
+          )}
         </div>
       </div>
-    </div>
 
-    <div className='px-4 py-3 flex flex-col items-center justify-center w-[10%]'>
-      <ChevronUp className="h-6 w-6 mr-1" />
-      <span className=''>
-        30
-      </span>
-    </div>
+      <div className='px-4 py-3 flex flex-col items-center justify-center w-[10%]'>
+        <ChevronUp className="h-6 w-6" />
+        <span className='text-sm'>
+          {upvotes}
+        </span>
+      </div>
 
-  </div>
+    </div >)
 }

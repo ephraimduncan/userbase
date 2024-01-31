@@ -11,6 +11,7 @@ export const postSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
   author: z.string(),
+  authorImage: z.string(),
   content: z.string(),
   upvotes: z.number(),
 })

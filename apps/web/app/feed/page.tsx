@@ -2,8 +2,25 @@ import { Button } from '@userbase/ui/primitives/button'
 import Image from 'next/image'
 import React from 'react'
 import { PostSection } from './post-section'
+import { promises as fs } from "fs"
+import path from "path"
+import { postSchema } from "../dashboard/posts/data/schema"
+import { z } from "zod"
 
-export default function Feed() {
+async function getPosts() {
+  const data = await fs.readFile(
+    path.join(process.cwd(), "./app/dashboard/posts/data/posts.json")
+  )
+
+  const tasks = JSON.parse(data.toString())
+
+  return z.array(postSchema).parse(tasks)
+}
+
+
+export default async function Feed() {
+  const posts = (await getPosts()).slice(0, 20)
+
   return (
     <div className='h-screen'>
       <div className='h-28 border-b'>
@@ -42,12 +59,11 @@ export default function Feed() {
             </div>
 
             <div className='space-y-3'>
-              <PostSection />
-              <PostSection />
-              <PostSection />
-              <PostSection />
-              <PostSection />
-              <PostSection />
+              {
+                posts.map(post => {
+                  return <PostSection key={post.id}   {...post} />
+                })
+              }
             </div>
 
           </div>

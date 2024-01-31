@@ -14,6 +14,7 @@ const tasks = Array.from({ length: 100 }, () => ({
   createdAt: faker.date.past(),
   updatedAt: faker.date.recent(),
   author: faker.person.fullName(),
+  authorImage: faker.image.avatar(),
   upvotes: faker.number.int({ min: 0, max: 100 }),
 }))
 

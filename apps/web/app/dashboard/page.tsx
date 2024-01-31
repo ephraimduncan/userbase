@@ -6,7 +6,7 @@ import { columns } from "./posts/components/columns"
 import { DataTable } from "./posts/components/data-table"
 import { postSchema } from "./posts/data/schema"
 
-async function getTasks() {
+async function getPosts() {
   const data = await fs.readFile(
     path.join(process.cwd(), "./app/dashboard/posts/data/posts.json")
   )
@@ -17,7 +17,7 @@ async function getTasks() {
 }
 
 export default async function TaskPage() {
-  const tasks = await getTasks()
+  const tasks = await getPosts()
 
   return (
     <>
