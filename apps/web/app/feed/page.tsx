@@ -6,6 +6,7 @@ import { promises as fs } from "fs"
 import path from "path"
 import { postSchema } from "../dashboard/posts/data/schema"
 import { z } from "zod"
+import { CreatePost } from './create-post'
 
 async function getPosts() {
   const data = await fs.readFile(
@@ -24,7 +25,7 @@ export default async function Feed() {
   return (
     <div className='h-screen'>
       <div className='h-28 border-b'>
-        <div className='mx-auto w-[60%] h-full pt-3 flex flex-col justify-between'>
+        <div className='mx-auto w-[70%] h-full pt-3 flex flex-col justify-between'>
           <div className='flex justify-between items-center'>
             <div className="flex items-center gap-2">
               <Image alt="Userbase Logo" src="/logo.svg" width={40} height={40} />
@@ -35,15 +36,15 @@ export default async function Feed() {
 
           {/* TODO: Do better, this is shit */}
           {/* MVP: Just make it work */}
-          <div className='-ml-4 space-x-4'>
-            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none'>Feedback</Button>
-            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none'>Roadmap</Button>
-            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none'>Changelog</Button>
+          <div className='space-x-6'>
+            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none px-0'>Feedback</Button>
+            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none px-0'>Roadmap</Button>
+            <Button variant="ghost" className='hover:bg-transparent hover:border-b hover:border-primary rounded-none px-0'>Changelog</Button>
           </div>
         </div>
       </div>
       <div className='py-6'>
-        <div className='mx-auto w-[60%] grid grid-cols-12 gap-8'>
+        <div className='mx-auto w-[70%] grid grid-cols-12 gap-8'>
           <div className='col-span-8 space-y-8'>
             {/* Filter Buttons */}
             <div className='flex items-center justify-between'>
@@ -67,7 +68,9 @@ export default async function Feed() {
             </div>
 
           </div>
-          <div className='col-span-4 bg-yellow-200'>2</div>
+          <div className='col-span-4'>
+            <CreatePost />
+          </div>
         </div>
       </div>
     </div>

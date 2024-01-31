@@ -14,6 +14,7 @@ type PostSectionProps = {
 
 export function PostSection({ author, description, content, title, upvotes, label, authorImage }: PostSectionProps) {
   return (
+
     <div className='border rounded-md h-[110px] flex w-full items-stretch cursor-pointer pointer-events-auto'>
       <div className='border-r px-4 py-3 flex-1 space-y-3 flex flex-col justify-between'>
         <div>
@@ -30,7 +31,7 @@ export function PostSection({ author, description, content, title, upvotes, labe
               <AvatarFallback className="text-xs">{author.split(" ").filter(n => !["Dr.", "Mr.", "Mrs."].includes(n)).map(n => n.charAt(0)).join("")}</AvatarFallback>
             </Avatar>
 
-            <span className='text-sm text-foreground/70'>{author}</span>
+            <span className='text-sm font-medium text-foreground/70'>{author}</span>
           </div>
           {label && (
             <div>
