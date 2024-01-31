@@ -10,7 +10,6 @@ type PostSectionProps = {
   content?: string,
   upvotes: number,
   label: string,
-
 }
 
 export function PostSection({ author, description, content, title, upvotes, label, authorImage }: PostSectionProps) {
@@ -28,7 +27,7 @@ export function PostSection({ author, description, content, title, upvotes, labe
           <div className='flex gap-1 items-center'>
             <Avatar className="h-7 w-7">
               <AvatarImage src={authorImage} alt={author} />
-              <AvatarFallback className="text-xs">ED</AvatarFallback>
+              <AvatarFallback className="text-xs">{author.split(" ").filter(n => !["Dr.", "Mr.", "Mrs."].includes(n)).map(n => n.charAt(0)).join("")}</AvatarFallback>
             </Avatar>
 
             <span className='text-sm text-foreground/70'>{author}</span>
@@ -52,6 +51,5 @@ export function PostSection({ author, description, content, title, upvotes, labe
           {upvotes}
         </span>
       </div>
-
     </div >)
 }
