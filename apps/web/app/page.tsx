@@ -1,6 +1,8 @@
 import SignOut from "./logout";
 import { auth } from "@/auth/lucia";
+import { Button } from "@userbase/ui/primitives/button";
 import * as context from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -11,14 +13,15 @@ export default async function Page() {
 	}
 
 	return (
-		<div className="flex justify-center items-center flex-col h-screen">
+		<div className="flex justify-center items-center flex-col h-screen space-y-4">
 			<div className="text-7xl">Userbase</div>
-			{session && (
-				<>
-					<pre>{JSON.stringify(session, null, 2)}</pre>
-					<SignOut />
-				</>
-			)}
+
+			<Link href="/dashboard">
+				<Button variant="link" size="lg">Go to Dashboard</Button>
+			</Link>
+
+			<pre>{JSON.stringify(session, null, 2)}</pre>
+			<SignOut />
 		</div>
 	);
 }

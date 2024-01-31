@@ -12,6 +12,8 @@ import { Input } from "@userbase/ui/primitives/input"
 import { Label } from "@userbase/ui/primitives/label"
 import { Textarea } from "@userbase/ui/primitives/textarea"
 
+// TODO: Add Label/Tag/Priority Select
+
 export function CreatePost() {
   return (
     <Card>
