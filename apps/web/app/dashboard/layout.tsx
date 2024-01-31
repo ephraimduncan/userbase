@@ -62,12 +62,12 @@ export default async function DashboardLayout({
               </AccordionItem>
             </Accordion>
 
-            <div className="flex gap-2 py-2 pl-2 rounded-xl hover:bg-muted cursor-pointer">
+            <div className="flex items-center gap-2 py-2 pl-2 text-sm rounded-xl hover:bg-muted cursor-pointer">
               <KanbanSquare size={24} />
               Roadmap
             </div>
 
-            <div className="flex gap-2 py-2 pl-2 rounded-xl hover:bg-muted cursor-pointer">
+            <div className="flex items-center gap-2 py-2 pl-2 text-sm rounded-xl hover:bg-muted cursor-pointer">
               <History size={24} />
               Changelog
             </div>
@@ -76,7 +76,7 @@ export default async function DashboardLayout({
         <UserNav />
 
       </div>
-      <div className="w-full px-6 py-8">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }
